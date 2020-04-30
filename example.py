@@ -2,6 +2,7 @@ from LogisticRegressor import LogisticRegressor
 import torch
 import matplotlib.pyplot as plt
 
+# Generating synthetic data
 n_points_per_label = 50
 label_0_points = 3*torch.rand(n_points_per_label) + 3
 label_1_points = 3*torch.rand(n_points_per_label) + 5
@@ -12,14 +13,18 @@ label_1 = torch.ones(n_points_per_label)
 x = torch.cat((label_0_points, label_1_points), 0).view(-1, 1)
 target = torch.cat((label_0, label_1), 0)
 
+# Instantiating and fitting the regressor 
 regressor = LogisticRegressor()
 regressor.fit(x, target, n_iters=2000)
 
+# Getting the error during the training process
 error = regressor.get_error()
 
+# Generating probability distribution curve
 x_test = torch.linspace(label_0_points.min(), label_1_points.max()).view(-1, 1)
 predicted = regressor.predict(x_test)
 
+# Plotting
 plt.style.use('ggplot')
 fig, ax = plt.subplots(2, 1)
 ax[0].plot(x_test, predicted.detach(), color='black', label='Probability distribution')
