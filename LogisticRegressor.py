@@ -6,15 +6,19 @@ class LogisticRegressor():
 
     def fit(self, x, target, n_iters=1000):
         self.n_dim = x.shape[1]
+        # Coefficients
         self.coefs = torch.randn(self.n_dim + 1, requires_grad=True)
-
+        
+        # Appending column of ones to the input tensor
         ones_column = torch.ones((x.shape[0]))
         X = torch.empty(x.shape[0], x.shape[1] + 1)
         X[:, :-1] = x
         X[:, -1] = ones_column
-
+        
+        # Keeping track of the errors during fitting process
         self.errors = []
-
+        
+        # Fitting process
         for i in range(n_iters):
             y = self.LogisticFunction(X.matmul(self.coefs))
             error = self.BinaryCrossEntropy(y, target)
