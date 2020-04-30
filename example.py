@@ -17,7 +17,7 @@ target = torch.cat((label_0, label_1), 0)
 regressor = LogisticRegressor()
 regressor.fit(x, target, n_iters=2000)
 
-# Getting the error during the training process
+# Getting the error during the fitting process
 error = regressor.get_error()
 
 # Generating probability distribution curve
